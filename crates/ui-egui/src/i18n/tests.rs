@@ -39,7 +39,7 @@ fn catalog_is_valid_and_preserves_placeholders_and_ellipses() {
 /// to English for what they don't cover yet; their gaps are reported, not enforced, so adding a
 /// command doesn't require a row in every language.
 const REQUIRED: &[&str] = &["uk"];
-const REPORTED: &[&str] = &["pt-BR", "de", "es", "cs", "ru", "fr", "zh"];
+const REPORTED: &[&str] = &["pt-BR", "de", "es", "cs", "ru", "fr", "it", "zh"];
 
 fn check(language: &str, what: &str, missing: Vec<String>) {
     if REQUIRED.contains(&language) {
@@ -162,14 +162,19 @@ fn locale_and_saved_preference_resolution() {
     for tag in ["es", "es-ES", "es_MX.UTF-8", "ES-ar"] {
         assert_eq!(locale_language(tag), Some("es"), "{tag}");
     }
+    for tag in ["it", "it-IT", "it_IT.UTF-8", "IT-ch"] {
+        assert_eq!(locale_language(tag), Some("it"), "{tag}");
+    }
     assert_eq!(Preference::Auto.resolve(&["es-ES".into(), "pt-BR".into()]), "es");
     assert_eq!(Preference::parse("es"), Some(Preference::Spanish));
+    assert_eq!(Preference::parse("it"), Some(Preference::Italian));
     assert_eq!(Preference::BrazilianPortuguese.resolve(&["uk-UA".into()]), "pt-BR");
     assert_eq!(Preference::parse("pt-BR"), Some(Preference::BrazilianPortuguese));
     let locales = vec!["pl-PL".into(), "uk-UA".into(), "en-US".into()];
     assert_eq!(Preference::Auto.resolve(&locales), "uk");
     assert_eq!(Preference::English.resolve(&locales), "en");
     assert_eq!(Preference::German.resolve(&locales), "de");
+    assert_eq!(Preference::Auto.resolve(&["pl-PL".into(), "it-IT".into(), "en-US".into()]), "it");
     assert_eq!(Preference::Auto.resolve(&["de-DE".into(), "en-US".into()]), "de");
     assert_eq!(Preference::Auto.resolve(&["en-US".into(), "uk-UA".into()]), "en");
     assert_eq!(Preference::Auto.resolve(&[]), "en");
@@ -180,6 +185,7 @@ fn locale_and_saved_preference_resolution() {
         let saved = serde_json::to_string(&preference).unwrap();
         assert_eq!(serde_json::from_str::<Preference>(&saved).unwrap(), preference);
     }
+
     assert!(serde_json::from_str::<Preference>("\"unsupported\"").is_err());
     assert_eq!(serde_json::from_value::<crate::UiState>(json!({})).unwrap().interface_language, Preference::Auto);
     // Saved with the host's other preferences; a bad saved value keeps the current choice.
@@ -190,6 +196,19 @@ fn locale_and_saved_preference_resolution() {
     assert_eq!(b.ui.interface_language, Preference::Ukrainian);
     b.load_prefs(r#"{"interfaceLanguage":"klingon"}"#);
     assert_eq!(b.ui.interface_language, Preference::Ukrainian);
+}
+
+#[test]
+fn italian_locales_and_plurals() {
+    assert_eq!(Preference::Italian.name(), "Italiano");
+    assert_eq!(Preference::Italian.resolve(&["en-US".into()]), "it");
+    with_language("it", || {
+        assert_eq!(t("Layers"), "Livelli");
+        assert_eq!(count(1, "{n} contributor", "{n} contributors"), "1 collaboratore");
+        assert_eq!(count(3, "{n} contributor", "{n} contributors"), "3 collaboratori");
+        assert_eq!(count(1, "{n} commit", "{n} commits"), "1 commit");
+        assert_eq!(count(4, "{n} commit", "{n} commits"), "4 commit");
+    });
 }
 
 #[test]
@@ -436,7 +455,7 @@ fn czech_menu_headings_keep_object_labels_and_other_catalogs() {
         assert_eq!(menu("Edit"), "Úpravy");
         assert_eq!(menu("File"), "Soubor");
     });
-    for language in ["en", "uk", "de", "es", "pt-BR", "unknown"] {
+    for language in ["en", "uk", "de", "es", "it", "pt-BR", "unknown"] {
         for source in crate::menus::MENUS {
             assert_eq!(tr_menu(language, source), tr(language, source));
         }

@@ -29,12 +29,14 @@ pub enum Preference {
     Russian,
     #[serde(rename = "fr")]
     French,
+    #[serde(rename = "it")]
+    Italian,
     #[serde(rename = "zh")]
     Chinese,
 }
 
 impl Preference {
-    pub const ALL: [Self; 10] = [
+    pub const ALL: [Self; 11] = [
         Self::Auto,
         Self::English,
         Self::Ukrainian,
@@ -44,6 +46,7 @@ impl Preference {
         Self::Czech,
         Self::Russian,
         Self::French,
+        Self::Italian,
         Self::Chinese,
     ];
 
@@ -67,6 +70,7 @@ impl Preference {
             Self::Czech => "cs",
             Self::Russian => "ru",
             Self::French => "fr",
+            Self::Italian => "it",
             Self::Chinese => "zh",
         }
     }
@@ -82,6 +86,7 @@ impl Preference {
             Self::Czech => "Čeština",
             Self::Russian => "Русский",
             Self::French => "Français",
+            Self::Italian => "Italiano",
             Self::Chinese => "简体中文",
         }
     }
@@ -105,6 +110,7 @@ impl Preference {
             Self::Czech => "cs",
             Self::Russian => "ru",
             Self::French => "fr",
+            Self::Italian => "it",
             Self::Chinese => "zh",
             Self::Auto => locales.iter().find_map(|s| locale_language(s)).unwrap_or("en"),
         }
@@ -122,7 +128,7 @@ pub struct Language {
     catalog: OnceLock<Catalog<'static>>,
 }
 
-pub static LANGUAGES: [Language; 9] = [
+pub static LANGUAGES: [Language; 10] = [
     Language { code: "en", name: "English", source: "", plural: plural_en, plural_forms: 2, catalog: OnceLock::new() },
     Language {
         code: "uk", name: "Українська", source: include_str!("uk.tsv"), plural: plural_uk, plural_forms: 3, catalog: OnceLock::new()
@@ -144,6 +150,8 @@ pub static LANGUAGES: [Language; 9] = [
     Language { code: "ru", name: "Русский", source: include_str!("ru.tsv"), plural: plural_uk, plural_forms: 3, catalog: OnceLock::new() },
     // French integer plurals (CLDR `fr`): one (0, 1), other, the Portuguese rule.
     Language { code: "fr", name: "Français", source: include_str!("fr.tsv"), plural: plural_pt, plural_forms: 2, catalog: OnceLock::new() },
+    // Italian integer plurals follow the English rule: one (1), other.
+    Language { code: "it", name: "Italiano", source: include_str!("it.tsv"), plural: plural_en, plural_forms: 2, catalog: OnceLock::new() },
     // Chinese has no grammatical plural: both `@plural` forms read the same. Its glyphs come from
     // an installed CJK font (`theme::cjk_font`); without one the interface stays English.
     Language { code: "zh", name: "简体中文", source: include_str!("zh.tsv"), plural: plural_en, plural_forms: 2, catalog: OnceLock::new() },

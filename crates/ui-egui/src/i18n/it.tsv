@@ -1,0 +1,68 @@
+# CADCraft Italian interface catalog — original translations.
+# License: MIT OR Apache-2.0 (the repository LICENSE-MIT and LICENSE-APACHE).
+# Written from CADCraft's English strings; no proprietary translations were copied.
+# UTF-8: context<TAB>English source<TAB>Italian translation.
+# Empty context = ordinary label; @plural = one|other forms with {n}.
+# Command IDs, typed keywords, technology/product names and user data stay unchanged.
+	About	Informazioni
+	About CADCraft	Informazioni su CADCraft
+	An array that would create more objects than this is refused.	Una matrice che creerebbe più oggetti di questo limite viene rifiutata.
+	Auto (system language)	Automatico (lingua di sistema)
+	Automatic save every	Salvataggio automatico ogni
+	Automatic save file location	Percorso del file di salvataggio automatico
+	Changes apply at once and are kept for next time.	Le modifiche si applicano subito e restano salvate per la prossima volta.
+	Close	Chiudi
+	Command line history	Cronologia della riga di comando
+	Copy as JSON	Copia come JSON
+	Crosshair size	Dimensione del mirino
+	Dark	Scuro
+	Default	Predefinito
+	Display	Schermo
+	Drafting	Impostazioni di disegno
+	Drafting Settings...	Impostazioni di disegno...
+	Draw	Disegna
+	DWG	DWG
+	DXF	DXF
+	Edit	Modifica
+	English	Inglese
+	File	File
+	Format	Formato
+	Help	Guida
+	Hold Shift to add to the selection	Tieni premuto Shift per aggiungere alla selezione
+	Insert	Inserisci
+	Interface language	Lingua dell'interfaccia
+	Interface Language	Lingua dell'interfaccia
+	Keep the system cursor visible over the drawing area	Mantieni visibile il cursore di sistema sull'area di disegno
+	Language	Lingua
+	Largest array	Matrice massima
+	Layers	Livelli
+	Light	Chiaro
+	min	min
+	Model background	Sfondo modello
+	Modify	Modifica
+	Object snap aperture	Apertura snap ad oggetto
+	Object snap marker size	Dimensione marcatore snap ad oggetto
+	Objects	oggetti
+	OK	OK
+	Open and Save	Apri e salva
+	Options	Opzioni
+	Profiles	Profili
+	Properties	Proprietà
+	Reset keeps the interface language.	Il ripristino mantiene la lingua dell'interfaccia.
+	Reset to Defaults	Ripristina predefiniti
+	Save new drawings as	Salva i nuovi disegni come
+	Screen magnifiers, screen readers and recorders follow the system cursor.	Gli ingranditori schermo, i lettori schermo e i registratori seguono il cursore di sistema.
+	Select objects first, then choose a command	Seleziona prima gli oggetti, poi scegli un comando
+	Selection	Selezione
+	Show Quick Properties for selected objects	Mostra Proprietà rapide per gli oggetti selezionati
+	Specify first point	Specifica il primo punto
+	Time-sensitive right-click: a quick click is Enter, holding opens the menu	Clic destro sensibile al tempo: un clic rapido equivale a Invio, tenendo premuto si apre il menu
+	Tools	Strumenti
+	Turned off, a right-click while a command runs always opens the shortcut menu.	Se disattivato, un clic destro mentre un comando è in esecuzione apre sempre il menu contestuale.
+	Use System Setting	Usa impostazione di sistema
+	User Preferences	Preferenze utente
+	View	Vista
+	Window	Finestra
+	{contributors} · {commits}	{contributors} · {commits}
+@plural	{n} commit	{n} commit|{n} commit
+@plural	{n} contributor	{n} collaboratore|{n} collaboratori
