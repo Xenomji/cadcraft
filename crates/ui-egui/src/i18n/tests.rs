@@ -186,18 +186,6 @@ fn locale_and_saved_preference_resolution() {
         assert_eq!(serde_json::from_str::<Preference>(&saved).unwrap(), preference);
     }
 
-    #[test]
-    fn italian_locales_and_plurals() {
-        assert_eq!(Preference::Italian.name(), "Italiano");
-        assert_eq!(Preference::Italian.resolve(&["en-US".into()]), "it");
-        with_language("it", || {
-            assert_eq!(t("Layers"), "Livelli");
-            assert_eq!(count(1, "{n} contributor", "{n} contributors"), "1 collaboratore");
-            assert_eq!(count(3, "{n} contributor", "{n} contributors"), "3 collaboratori");
-            assert_eq!(count(1, "{n} commit", "{n} commits"), "1 commit");
-            assert_eq!(count(4, "{n} commit", "{n} commits"), "4 commit");
-        });
-    }
     assert!(serde_json::from_str::<Preference>("\"unsupported\"").is_err());
     assert_eq!(serde_json::from_value::<crate::UiState>(json!({})).unwrap().interface_language, Preference::Auto);
     // Saved with the host's other preferences; a bad saved value keeps the current choice.
@@ -208,6 +196,19 @@ fn locale_and_saved_preference_resolution() {
     assert_eq!(b.ui.interface_language, Preference::Ukrainian);
     b.load_prefs(r#"{"interfaceLanguage":"klingon"}"#);
     assert_eq!(b.ui.interface_language, Preference::Ukrainian);
+}
+
+#[test]
+fn italian_locales_and_plurals() {
+    assert_eq!(Preference::Italian.name(), "Italiano");
+    assert_eq!(Preference::Italian.resolve(&["en-US".into()]), "it");
+    with_language("it", || {
+        assert_eq!(t("Layers"), "Livelli");
+        assert_eq!(count(1, "{n} contributor", "{n} contributors"), "1 collaboratore");
+        assert_eq!(count(3, "{n} contributor", "{n} contributors"), "3 collaboratori");
+        assert_eq!(count(1, "{n} commit", "{n} commits"), "1 commit");
+        assert_eq!(count(4, "{n} commit", "{n} commits"), "4 commit");
+    });
 }
 
 #[test]
